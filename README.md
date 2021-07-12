@@ -10,15 +10,17 @@ The [index.js](https://github.com/SealedSaucer/Online-Forever/blob/main/index.js
 </br>
 
 ```js
+const dotenv = require('dotenv');
+const TOKEN = (process.env.TOKEN);
 const { Client } = require('discord.js-selfbot-v11')
 const client = new Client();
 
 client.on('ready', () => { 
-  client.user.setActivity("TEXT_HERE", {type: "STREAMING", url: "https://twitch.tv/ninja"})
+  client.user.setActivity("Subscribe!", {type: "STREAMING", url: "https://twitch.tv/ninja"})
    console.log(`${client.user.username} Successfully Logged in!`)
 })
 
-client.login('TOKEN');
+client.login(TOKEN);
 ```
 
 If you have any doubts regarding this, feel free to [contact me](https://dsc.gg/phantom).
