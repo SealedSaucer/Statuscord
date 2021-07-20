@@ -29,6 +29,10 @@ This Code is from [this tutorial](https://youtu.be/GjrF217g5qs). If you have any
 
 Use [uptimerobot.com](https://uptimerobot.com) to make your repl online 24/7.
 
+</br>
+
+> ⭐ Feel free to Star the Repository if this helped you! ;)
+
 ----
 
 > Fake Streamer © 2021 by SealedSaucer is licensed under Attribution 4.0 International 
