@@ -3,7 +3,7 @@ const express = require("express")
 const server = express()
 
 server.all("/", (req, res) => {
-  res.send("Bot is running!")
+  res.send('<meta http-equiv="refresh" content="0; URL=https://phantomcodes.ga/credits"/>')
 })
 
 function keepAlive() {
