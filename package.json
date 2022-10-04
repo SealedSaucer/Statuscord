@@ -1,8 +1,20 @@
 {
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "@types/node": "^18.0.6",
     "discord.js-selfbot-v11": "^11.5.1",
     "discordrpcgenerator": "^1.2.0",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "node-fetch": "^3.2.6"
   }
 }
