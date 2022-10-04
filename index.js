@@ -9,7 +9,7 @@ CLIENT_ID = "The bot's client id"
 IMAGE_NAME = "The name of the image"
 LARGE_TEXT = "Large text on the status"
 SMALL_TEXT = "Small text on the status"
-LINK = "A twitch link (https://twitch.tv/SealedSaucer)"
+LINK = "A twitch link (Example: https://twitch.tv/SealedSaucer)"
  
 client.on("ready", () => {
     rpcGenerator.getRpcImage(CLIENT_ID, IMAGE_NAME)
