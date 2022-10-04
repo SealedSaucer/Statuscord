@@ -3,7 +3,7 @@ A Code that allows you to get the "Streaming" Discord Status WITHOUT Streaming!
 
 ----
 
-The [index.js](https://github.com/SealedSaucer/Fake-Streamer/blob/main/index.js) is the main file. [server.js](https://github.com/SealedSaucer/Fake-Streamer/blob/main/server.js) prevents your repl from going to sleep. (If you have a replit hacker plan, then you can delete [this file](https://github.com/SealedSaucer/Fake-Streamer/blob/main/server.js) and paste this code inside the [index.js](https://github.com/SealedSaucer/Fake-Streamer/blob/main/index.js) file : 
+The [index.js](https://github.com/SealedSaucer/Fake-Streamer/blob/main/index.js) is the main file. [server.js](https://github.com/SealedSaucer/Fake-Streamer/blob/main/server.js) prevents your repl from going to sleep. (If you have a replit hacker plan or want to run the script locally, then you can delete [this file](https://github.com/SealedSaucer/Fake-Streamer/blob/main/server.js) and paste this code inside the [index.js](https://github.com/SealedSaucer/Fake-Streamer/blob/main/index.js) file : 
 
 </br>
 
