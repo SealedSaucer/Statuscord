@@ -1,32 +1,30 @@
-const keepAlive = require("./server")
-let discord = require('discord.js-selfbot-v11')
-let rpcGenerator = require("discordrpcgenerator")
-const dotenv = require('dotenv');
-const TOKEN = (process.env.TOKEN);
-let client = new discord.Client()
+const express = require("express");
+const chalk = require("chalk");
+const server = express();
+const prompt = require('prompt-sync')({sigint: true});
 
-CLIENT_ID = "The bot's client id"
-IMAGE_NAME = "The name of the image"
-LARGE_TEXT = "Large text on the status"
-SMALL_TEXT = "Small text on the status"
-LINK = "A twitch link (Example: https://twitch.tv/SealedSaucer)"
- 
-client.on("ready", () => {
-    rpcGenerator.getRpcImage(CLIENT_ID, IMAGE_NAME)
-    .then(image => {
-        let presence = new rpcGenerator.Rpc()
-        .setName("twitch")
-        .setUrl(LINK)
-        .setType("STREAMING")
-        .setApplicationId(CLIENT_ID)
-        .setAssetsLargeImage(image.id)
-        .setAssetsLargeText(SMALL_TEXT)
-        .setDetails(LARGE_TEXT)
- 
-        client.user.setPresence(presence.toDiscord())
-    }).catch(console.error)
-  console.log(`${client.user.username} Successfully Logged in!`)
+console.log(chalk.cyanBright.bold("Statuscord") + " | " + chalk.greenBright.bold("SealedSaucer"));
+
+server.all("/", (req, res) => {
+  res.send('<meta http-equiv="refresh" content="0; URL=https://phantom.is-a.dev/support"/>')
 })
+server.listen(3000);
+console.log(("\n[" + chalk.green.bold("+") + "]") + " The webserver is ready.");
 
-keepAlive()
-client.login(TOKEN)
+console.log("\n[" + chalk.yellow.bold("!") + "] Which presence would you like to start?\n\n[1] Playing Status \n[2] Listening Status\n[3] Streaming Status\n\n");
+
+status = prompt("> ");
+
+if (status == 1) {
+  console.clear();
+  import('./statuses/playing.js');
+} else if (status == 2) {
+  console.clear();
+  import('./statuses/listening.js');
+} else if (status == 3) {
+  console.clear();
+  import('./statuses/streaming.js');
+} else {
+  console.log("[" + chalk.red.bold("-") + "] Invalid option.");
+  process.exit();
+}
