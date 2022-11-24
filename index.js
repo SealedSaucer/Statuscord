@@ -1,9 +1,6 @@
-// code913 was here :)
-
 const
-  // Change this
-  CLIENT_ID = "886549136172789830",
-
+  CLIENT_ID = "Add your client id here",
+  
   express = require("express"),
   chalk = require("chalk"),
   server = express(),
@@ -21,7 +18,7 @@ const
 dotenv.config();
 
 if (!process.env.TOKEN) {
-  console.error("You need to put a token");
+  console.error("You need to add a token inside Secrets.");
   process.exit();
 }
 
@@ -30,15 +27,15 @@ console.log(`${chalk.cyanBright.bold("Statuscord")} | ${chalk.greenBright.bold("
 server.all("/", (req, res) => res.send(`<meta http-equiv="refresh" content="0; URL=https://phantom.is-a.dev/support"/>`));
 server.listen(process.env.PORT ?? 3000);
 
-console.log(`[${chalk.green.bold("+")}] The webserver is ready.`);
-
 client.login(process.env.TOKEN);
 
+console.log(`\n[${chalk.green.bold("+")}] The webserver is ready.\n`);
+
 console.log(
-  `[${chalk.yellow.bold("!")}] Which presence would you like to start?`, "\n",
-  [...statuses.entries()]
-    .map(([number, [statusName]]) => `[${number}] ${statusName.replace(/^./, m => m.toUpperCase())}`)
-    .join("\n")
+  `[${chalk.yellow.bold("!")}] Which presence would you like to start?\n`,
+  [ ...statuses.entries() ]
+  .map(([number, [statusName]]) => "\n" + `[${number}] ${statusName.replace(/^./, m => m.toUpperCase())}`)
+  .join("") + "\n"
 );
 const number = prompt("> ");
 const [statusName, style] = statuses.get(+number);
@@ -47,9 +44,8 @@ if (statusName) {
   const statusModule = require(`./statuses/${statusName}.js`);
 
   console.clear();
-  // Underscore argument ignore syntax inspired by Elixir
   client.on("ready", _ => statusModule(client, CLIENT_ID)
-    .then(_ => console.log(`[${style(statusName.toUpperCase())}] Successfully logged in as ${client.user.username} (${client.user.id})!`))
+    .then(_ => console.log(`[${style(statusName.toUpperCase())}] Successfully logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})!`))
     .catch(console.error)
   );
 } else {
