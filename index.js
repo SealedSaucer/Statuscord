@@ -2,7 +2,7 @@
 
 const
   // Change this
-  CLIENT_ID = "Id of the client",
+  CLIENT_ID = "886549136172789830",
 
   express = require("express"),
   chalk = require("chalk"),
