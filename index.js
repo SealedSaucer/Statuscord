@@ -20,7 +20,7 @@ const
 
 dotenv.config();
 
-if (process.env.TOKEN ?? true) {
+if (!process.env.TOKEN) {
   console.error("You need to put a token");
   process.exit();
 }
@@ -35,7 +35,7 @@ console.log(`[${chalk.green.bold("+")}] The webserver is ready.`);
 client.login(process.env.TOKEN);
 
 console.log(
-  `[${chalk.yellow.bold("!")}] Which presence would you like to start?`,
+  `[${chalk.yellow.bold("!")}] Which presence would you like to start?`, "\n",
   [...statuses.entries()]
     .map(([number, [statusName]]) => `[${number}] ${statusName.replace(/^./, m => m.toUpperCase())}`)
     .join("\n")

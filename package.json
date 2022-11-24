@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "chalk": "^5.1.2",
+    "chalk": "^4.1.2",
     "discord.js-selfbot-v11": "^11.5.1",
     "discordrpcgenerator": "^1.2.0",
     "dotenv": "^16.0.3",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "SealedSaucer",
