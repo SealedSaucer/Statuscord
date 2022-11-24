@@ -1,6 +1,9 @@
 // code913 was here :)
 
 const
+  // Change this
+  CLIENT_ID = "Id of the client",
+
   express = require("express"),
   chalk = require("chalk"),
   server = express(),
@@ -25,9 +28,9 @@ console.log(`${chalk.cyanBright.bold("Statuscord")} | ${chalk.greenBright.bold("
 server.all("/", (req, res) => res.send(`<meta http-equiv="refresh" content="0; URL=https://phantom.is-a.dev/support"/>`));
 server.listen(process.env.PORT ?? 3000);
 
-client.login(process.env.TOKEN);
-
 console.log(`[${chalk.green.bold("+")}] The webserver is ready.`);
+
+client.login(process.env.TOKEN);
 
 console.log(
   `[${chalk.yellow.bold("!")}] Which presence would you like to start?`,
@@ -43,7 +46,7 @@ if (statusName) {
 
   console.clear();
   // Underscore argument ignore syntax inspired by Elixir
-  client.on("ready", _ => statusModule(client)
+  client.on("ready", _ => statusModule(client, CLIENT_ID)
     .then(_ => console.log(`[${style(statusName.toUpperCase())}] Successfully logged in as ${client.user.username} (${client.user.id})!`))
     .catch(console.error)
   );

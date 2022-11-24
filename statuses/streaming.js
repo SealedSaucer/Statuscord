@@ -7,7 +7,7 @@ const
   SMALL_TEXT = "Small text on the status",
   LINK = "https://twitch.tv/SealedSaucer";
  
-module.exports = client => rpcGenerator.getRpcImage(CLIENT_ID, IMAGE_NAME)
+module.exports = (client, CLIENT_ID) => rpcGenerator.getRpcImage(CLIENT_ID, IMAGE_NAME)
   .then(image => client.user.setPresence(
     new rpcGenerator.Rpc()
       .setName("twitch")
