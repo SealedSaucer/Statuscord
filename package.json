@@ -1,7 +1,7 @@
 {
-  "name": "statuscord",
+  "name": "Statuscord",
   "version": "1.0.0",
-  "description": "",
+  "description": "A code that allows you to get the Playing, Listening, and Streaming Discord Statuses 24/7!",
   "main": "index.js",
   "dependencies": {
     "chalk": "^4.1.2",
