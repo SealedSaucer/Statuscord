@@ -1,30 +1,35 @@
-const express = require("express");
-const chalk = require("chalk");
-const server = express();
-const prompt = require('prompt-sync')({sigint: true});
+const
+  express = require("express"),
+  chalk = require("chalk"),
+  server = express(),
+  prompt = require("prompt-sync")({sigint: true}),
+  statuses = new Map([
+    [1, "playing"],
+    [2, "listening"],
+    [3, "streaming"]
+  ]);
 
-console.log(chalk.cyanBright.bold("Statuscord") + " | " + chalk.greenBright.bold("SealedSaucer"));
+console.log(`${chalk.cyanBright.bold("Statuscord")} | ${chalk.greenBright.bold("SealedSaucer")}`);
 
-server.all("/", (req, res) => {
-  res.send('<meta http-equiv="refresh" content="0; URL=https://phantom.is-a.dev/support"/>')
-})
-server.listen(3000);
-console.log(("\n[" + chalk.green.bold("+") + "]") + " The webserver is ready.");
+server.all("/", (req, res) => res.send(`<meta http-equiv="refresh" content="0; URL=https://phantom.is-a.dev/support"/>`));
+server.listen(process.env.PORT ?? 3000);
 
-console.log("\n[" + chalk.yellow.bold("!") + "] Which presence would you like to start?\n\n[1] Playing Status \n[2] Listening Status\n[3] Streaming Status\n\n");
+console.log(`[${chalk.green.bold("+")}] The webserver is ready.`);
 
-status = prompt("> ");
+console.log(
+  `[${chalk.yellow.bold("!")}] Which presence would you like to start?`,
+  [ ...statuses.entries() ]
+  .map((number, statusName) => `[${number}] ${statusName.replace(/^./, m => m.toUpperCase())}`)
+  .join("\n")
+);
+const number = prompt("> ");
+const statusName = statuses.get(+number);
 
-if (status == 1) {
+if (statusName) {
+  const statusModule = require(`./statuses/${statusName}.js`);
+
   console.clear();
-  import('./statuses/playing.js');
-} else if (status == 2) {
-  console.clear();
-  import('./statuses/listening.js');
-} else if (status == 3) {
-  console.clear();
-  import('./statuses/streaming.js');
+  statusModule(client);
 } else {
-  console.log("[" + chalk.red.bold("-") + "] Invalid option.");
-  process.exit();
+  console.log(`[${chalk.red.bold("-")}] Invalid option.`);
 }
