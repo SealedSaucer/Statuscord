@@ -7,7 +7,7 @@ const
   express = require("express"),
   chalk = require("chalk"),
   server = express(),
-  prompt = require("prompt-sync")({sigint: true}),
+  prompt = require("prompt-sync")({ sigint: true }),
   dotenv = require('dotenv'),
   { Client } = require('discord.js-selfbot-v11'),
   client = new Client(),
@@ -17,6 +17,8 @@ const
     [2, ["listening", chalk.greenBright.bold]],
     [3, ["streaming", chalk.magentaBright.bold]]
   ]);
+
+dotenv.config();
 
 if (process.env.TOKEN ?? true) {
   console.error("You need to put a token");
@@ -34,9 +36,9 @@ client.login(process.env.TOKEN);
 
 console.log(
   `[${chalk.yellow.bold("!")}] Which presence would you like to start?`,
-  [ ...statuses.entries() ]
-  .map(([ number, [statusName] ]) => `[${number}] ${statusName.replace(/^./, m => m.toUpperCase())}`)
-  .join("\n")
+  [...statuses.entries()]
+    .map(([number, [statusName]]) => `[${number}] ${statusName.replace(/^./, m => m.toUpperCase())}`)
+    .join("\n")
 );
 const number = prompt("> ");
 const [statusName, style] = statuses.get(+number);
