@@ -1,4 +1,13 @@
-// Change this to the name of the game you want
-const GAME_NAME = "Cyberpunk 2077";
+const { ShardClient } = require("detritus-client");
+const { ActivityTypes } = require("detritus-client/lib/constants");
 
-module.exports = (client) => client.user.setActivity(GAME_NAME, { type: "PLAYING" });
+/**
+ * 
+ * @param {ShardClient} client 
+ */
+module.exports = async (client, CLIENT_ID, statusInfo) => client.gateway.setPresence({
+    activity: {
+        name: statusInfo.game,
+        type: ActivityTypes.PLAYING
+    }
+});

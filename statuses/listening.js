@@ -1,17 +1,19 @@
-const
-  rpcGenerator = require("discordrpcgenerator"),
+const { ShardClient } = require("detritus-client");
+const { GatewayActivityTypes } = require("detritus-client-socket/lib/constants");
 
-  // Add your client id in the index.js file
-  IMAGE = "The name of the image",
-  SONG = "The name of the song",
-  ARTIST = "The artist of the song";
-
-module.exports = (client, CLIENT_ID) => rpcGenerator.getRpcImage(CLIENT_ID, IMAGE)
-  .then(image => client.user.setPresence(
-    rpcGenerator.createSpotifyRpc(client)
-      .setApplicationId(CLIENT_ID)
-      .setAssetsLargeImage(image.id)
-      .setDetails(SONG)
-      .setState(ARTIST)
-      .toDiscord()
-  ));
+/***
+ * @param {ShardClient} client
+ */
+module.exports = (client, CLIENT_ID, {
+  song,
+  artist,
+  image
+}) => client.gateway.setPresence({
+  activity: {
+    assets: {
+      smallImage: image
+    },
+    type: GatewayActivityTypes.LISTENING,
+    name: song
+  }
+});
