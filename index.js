@@ -1,6 +1,6 @@
 const
   // You need to change this
-  CLIENT_ID = "Add your client id here",
+  CLIENT_ID = "957515923357597777", //"Add your client id here",
   // Don't remove the ""
   // Example:
   // CLIENT_ID = "42069420694206942069",

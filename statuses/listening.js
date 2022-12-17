@@ -4,7 +4,7 @@ const { GatewayActivityTypes } = require("detritus-client-socket/lib/constants")
 /***
  * @param {ShardClient} client
  */
-module.exports = (client, CLIENT_ID, {
+module.exports = (client, _, {
   song,
   artist,
   image
