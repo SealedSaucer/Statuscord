@@ -14,10 +14,11 @@ module.exports = {
     return await client.gateway.setPresence({
       activity: {
         assets: {
-          smallImage: image
+          largeImage: image
         },
         type: GatewayActivityTypes.LISTENING,
-        name: song
+        name: song,
+        state: artist
       }
     });
   }
