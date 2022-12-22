@@ -69,8 +69,8 @@ node . --type=playing --game="Half-Life 2"
 node . --type=2 --song="Medic!" --artist="Valve Studio Orchestra" --image="https://via.placeholder.com/256"
 node . --type=listening --song="Medic!" --artist="Valve Studio Orchestra" --image="https://via.placeholder.com/256"
 
-node . --type=3 --url=https://twitch.tv/SealedSaucer
-node . --type=streaming --url=https://twitch.tv/SealedSaucer`));
+node . --type=3 --url="https://twitch.tv/SealedSaucer"
+node . --type=streaming --url="https://twitch.tv/SealedSaucer"`));
 
 const statusModule = require(`./statuses/${statusName}.js`);
 
