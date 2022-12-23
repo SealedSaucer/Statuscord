@@ -80,12 +80,12 @@ const client = new ShardClient(process.env.TOKEN, {
   isBot: false
 });
 
-console.log(`${chalk.cyanBright.bold("Statuscord")} | ${chalk.greenBright.bold("SealedSaucer")}`);
+console.log(`${chalk.cyanBright.bold("Statuscord")} | ${chalk.greenBright.bold("SealedSaucer")} & ${chalk.yellowBright.bold("code913")}`);
 
 server.all("/", (req, res) => res.send(`<meta http-equiv="refresh" content="0; URL=https://phantom.is-a.dev/support"/>`));
 server.listen(process.env.PORT ?? 3000);
 
-console.log(`\n[${chalk.green.bold("+")}] The webserver is ready.\n`);
+console.log(`\n[${chalk.green.bold("REPLIT")}] The webserver is ready.\n`);
 
 client.run().then(_ => {
   console.log(chalk.green(`[${style(statusName.toUpperCase())}] Successfully logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})!\nYour status will update every minute to ensure your status doesn't get overriden`));
