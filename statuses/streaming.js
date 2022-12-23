@@ -2,9 +2,6 @@ const { ShardClient } = require("detritus-client");
 const { GatewayActivityTypes } = require("detritus-client-socket/lib/constants");
 const { URL } = require("node:url");
 
-/**
- * @param {ShardClient} client
- */
 module.exports = {
   args: ["title", "url"],
   async run({
