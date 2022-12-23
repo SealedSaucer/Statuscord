@@ -1,6 +1,6 @@
 const
   // You need to change this
-  CLIENT_ID = "957515923357597777", //"Add your client id here",
+  CLIENT_ID = "Add your client id here",
   // Don't remove the ""
   // Example:
   // CLIENT_ID = "42069420694206942069",
@@ -48,8 +48,6 @@ if (!process.env.TOKEN) logError("You need to add a token inside replit's secret
 const
   statusInfo = ["type", "game", "song", "artist", "album", "image", "url", "title"].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {}),
   [statusName, style] = statuses.get(+statusInfo.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusInfo.type.toLowerCase()) ?? [];
-
-// console.log(statusInfo, statusName);
 
 if (!statusName) logError(`\
 ${!statusInfo.type
