@@ -7,7 +7,13 @@ const { URL } = require("node:url");
  */
 module.exports = {
   args: ["title", "url"],
-  async run(client, { title, url }, setPresence) {
+  async run({
+    statusInfo: {
+      title,
+      url
+    },
+    setPresence
+  }) {
     const { hostname } = new URL(url);
 
     const siteName = new Map([
