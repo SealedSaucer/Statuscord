@@ -61,13 +61,10 @@ ${[...statuses.entries()].map(([number, [name]]) => `[${chalk.white(number)}] - 
 You can use either the number or the name
 Examples: (yes you need the ")
 ` + chalk.whiteBright(`
-node . --type=1 --game="Half-Life 2"
 node . --type=playing --game="Half-Life 2"
 
-node . --type=2 --song="Medic!" --artist="Valve Studio Orchestra" --image="https://via.placeholder.com/256"
-node . --type=listening --song="Medic!" --artist="Valve Studio Orchestra" --image="https://via.placeholder.com/256"
+node . --type=listening --song="Medic!" --artist="Valve Studio Orchestra" --album="Fight Songs" --image="mp:attachments/1043947086946766888/1055860217163829258/ss_2c78852e39f4d838007b34460baeb40aabe41193.png"
 
-node . --type=3 --url="https://twitch.tv/SealedSaucer" --title="Half-Life 2"
 node . --type=streaming --url="https://twitch.tv/SealedSaucer" --title="Half-Life 2"`));
 // you can tell that the person who wrote this is a major fan
 
