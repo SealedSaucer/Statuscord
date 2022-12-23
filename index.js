@@ -46,7 +46,7 @@ if (!/^\d+$/.test(CLIENT_ID)) logError("Read the top of the file once again");
 if (!process.env.TOKEN) logError("You need to add a token inside replit's secrets or through a .env file");
 
 const
-  statusInfo = ["type", "game", "song", "artist", "image", "url"].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {}),
+  statusInfo = ["type", "game", "song", "artist", "image", "url", "title"].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {}),
   [statusName, style] = statuses.get(+statusInfo.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusInfo.type.toLowerCase()) ?? [];
 
 // console.log(statusInfo, statusName);
@@ -69,8 +69,8 @@ node . --type=playing --game="Half-Life 2"
 node . --type=2 --song="Medic!" --artist="Valve Studio Orchestra" --image="https://via.placeholder.com/256"
 node . --type=listening --song="Medic!" --artist="Valve Studio Orchestra" --image="https://via.placeholder.com/256"
 
-node . --type=3 --url="https://twitch.tv/SealedSaucer"
-node . --type=streaming --url="https://twitch.tv/SealedSaucer"`));
+node . --type=3 --url="https://twitch.tv/SealedSaucer" --title="Half-Life 2"
+node . --type=streaming --url="https://twitch.tv/SealedSaucer" --title="Half-Life 2"`));
 
 const statusModule = require(`./statuses/${statusName}.js`);
 
@@ -91,11 +91,16 @@ client.run().then(_ => {
   console.log(chalk.green(`[${style(statusName.toUpperCase())}] Successfully logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})!\nYour status will update every minute to ensure your status doesn't get overriden`));
 
   function update() {
-    statusModule.run(client, CLIENT_ID, statusInfo)
+    statusModule.run(client, statusInfo, presenceData => client.gateway.setPresence({
+      activity: {
+        ...presenceData,
+        createdAt: Date.now()
+      }
+    }), CLIENT_ID)
       .then(_ => console.log(chalk.green(`[${new Intl.DateTimeFormat('en-US', { timeStyle: 'medium' }).format(new Date())}] Sucessfully updated status!`)))
       .catch(err => {
-        console.error(err)
-        process.exit()
+        console.error(err);
+        process.exit();
       });
   }
 

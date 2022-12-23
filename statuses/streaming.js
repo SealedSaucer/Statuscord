@@ -1,14 +1,13 @@
-const chalk = require("chalk");
 const { ShardClient } = require("detritus-client");
-const { ActivityTypes } = require("detritus-client/lib/constants");
+const { GatewayActivityTypes } = require("detritus-client-socket/lib/constants");
 const { URL } = require("node:url");
 
 /**
  * @param {ShardClient} client
  */
 module.exports = {
-  args: ["url"],
-  async run(client, _, { url }) {
+  args: ["title", "url"],
+  async run(client, { title, url }, setPresence) {
     const { hostname } = new URL(url);
 
     const siteName = new Map([
@@ -18,12 +17,11 @@ module.exports = {
 
     if (!siteName) throw "Only twitch.tv and youtube.com urls are supported";
 
-    return await client.gateway.setPresence({
-      activity: {
-        type: ActivityTypes.STREAMING,
-        name: siteName,
-        url
-      }
+    return await setPresence({
+      type: GatewayActivityTypes.STREAMING,
+      name: siteName,
+      details: title,
+      url
     });
   }
 }

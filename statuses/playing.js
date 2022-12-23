@@ -1,5 +1,5 @@
 const { ShardClient } = require("detritus-client");
-const { ActivityTypes } = require("detritus-client/lib/constants");
+const { GatewayActivityTypes, GatewayActivityFlags } = require("detritus-client-socket/lib/constants");
 
 /**
  * 
@@ -7,12 +7,11 @@ const { ActivityTypes } = require("detritus-client/lib/constants");
  */
 module.exports = {
   args: ["game"],
-  async run(client, _, { game }) {
-    client.gateway.setPresence({
-      activity: {
-        name: statusInfo.game,
-        type: ActivityTypes.PLAYING
-      }
+  async run(client, { game }, setPresence) {
+    return await setPresence({
+      name: game,
+      type: GatewayActivityTypes.PLAYING,
+      flags: GatewayActivityFlags.INSTANCE
     });
   }
 };

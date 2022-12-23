@@ -6,20 +6,18 @@ const { GatewayActivityTypes } = require("detritus-client-socket/lib/constants")
  */
 module.exports = {
   args: ["song", "artist", "image"],
-  async run(client, _, {
+  async run(client, {
     song,
     artist,
     image
-  }) {
-    return await client.gateway.setPresence({
-      activity: {
-        assets: {
-          largeImage: image
-        },
-        type: GatewayActivityTypes.LISTENING,
-        name: song,
-        state: artist
-      }
+  }, setPresence, CLIENT_ID) {
+    return await setPresence({
+      assets: {
+        largeImage: image
+      },
+      type: GatewayActivityTypes.LISTENING,
+      name: song,
+      state: artist
     });
   }
 }
