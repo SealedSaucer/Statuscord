@@ -39,18 +39,16 @@ dotenv.config();
 if (!/^\d+$/.test(CLIENT_ID)) logError("Read the top of the file once again");
 if (!process.env.TOKEN) logError("You need to add a token inside replit's secrets or through a .env file");
 
-const
-  statusArgs = [
+const statusArgs = [
     "type",
     ...new Set(readdirSync("./statuses").map(file => Object.values(require(`./statuses/${file}`).args)).flat(3))
-  ].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {}),
-  [statusName, style] = statuses.get(+statusArgs.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusArgs.type.toLowerCase()) ?? [];
+  ].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {});
 
 if (!statusName) logError(`\
 ${!statusArgs.type
-    ? "You need to type --type=<statusType> after the node command"
-    : "Invalid status type"
-  }
+  ? "You need to type --type=<statusType> after the node command"
+  : "Invalid status type"
+}
 
 Supported status types:
 ${[...statuses.entries()].map(([number, [name]]) => `[${chalk.white(number)}] - ${chalk.green(name)}`).join("\n")}
@@ -65,7 +63,9 @@ node . --type=listening --song="Medic!" --artist="Valve Studio Orchestra" --albu
 node . --type=streaming --url="https://twitch.tv/SealedSaucer" --title="Half-Life 2"`));
 // you can tell that the person who wrote this is a major fan
 
-const statusModule = require(`./statuses/${statusName}.js`);
+const
+  [statusName, style] = statuses.get(+statusArgs.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusArgs.type.toLowerCase()) ?? [],
+  statusModule = require(`./statuses/${statusName}.js`);
 
 if (statusModule.args.required.some(arg => !statusArgs[arg])) logError(`The status type ${chalk.yellow(statusName)} needs the args ${chalk.yellow(statusModule.args.required.join(", "))}` + (statusModule.args.optional ? `It also supports ${chalk.yellow(statusModule.args.optional.join(", "))}` : ""));
 statusModule.validateArgs(statusArgs);
