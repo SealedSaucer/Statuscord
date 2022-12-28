@@ -2,7 +2,9 @@ const { ShardClient } = require("detritus-client");
 const { GatewayActivityTypes } = require("detritus-client-socket/lib/constants");
 
 module.exports = {
-  args: ["song", "artist", "album", "image"],
+  args: {
+    required: ["song", "artist", "album", "image"]
+  },
   async run({
     statusInfo: {
       song,

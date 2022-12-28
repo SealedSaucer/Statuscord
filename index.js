@@ -24,21 +24,15 @@ const
   chalk = require("chalk"),
   server = express(),
   dotenv = require("dotenv"),
+  { readdirSync } = require("node:fs"),
+  { logError } = require("./chalk.js"),
 
-  /**
-   * @type Map<number, [string, chalk.ChalkFunction]>
-   */
   statuses = new Map([
     [1, ["playing", chalk.yellowBright.bold]],
     [2, ["listening", chalk.greenBright.bold]],
     [3, ["streaming", chalk.magentaBright.bold]]
-  ])
-
-getArg = name => process.argv.find(arg => arg.startsWith(`--${name}`))?.match(/(?<=\=).+/)?.[0] ?? "",
-  logError = message => {
-    console.error(chalk.redBright(message));
-    process.exit();
-  };
+  ]),
+  getArg = name => process.argv.find(arg => arg.startsWith(`--${name}`))?.match(/(?<=\=).+/)?.[0] ?? null;
 
 dotenv.config();
 
@@ -46,11 +40,14 @@ if (!/^\d+$/.test(CLIENT_ID)) logError("Read the top of the file once again");
 if (!process.env.TOKEN) logError("You need to add a token inside replit's secrets or through a .env file");
 
 const
-  statusInfo = ["type", "game", "song", "artist", "album", "image", "url", "title"].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {}),
-  [statusName, style] = statuses.get(+statusInfo.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusInfo.type.toLowerCase()) ?? [];
+  statusArgs = [
+    "type",
+    ...new Set(readdirSync("./statuses").map(file => Object.values(require(`./statuses/${file}`).args)).flat(3))
+  ].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {}),
+  [statusName, style] = statuses.get(+statusArgs.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusArgs.type.toLowerCase()) ?? [];
 
 if (!statusName) logError(`\
-${!statusInfo.type
+${!statusArgs.type
     ? "You need to type --type=<statusType> after the node command"
     : "Invalid status type"
   }
@@ -70,7 +67,8 @@ node . --type=streaming --url="https://twitch.tv/SealedSaucer" --title="Half-Lif
 
 const statusModule = require(`./statuses/${statusName}.js`);
 
-if (statusModule.args.some(arg => !statusInfo[arg])) logError(`The status type ${chalk.yellow(statusName)} needs the args ${chalk.yellow(statusModule.args.join(", "))}`);
+if (statusModule.args.required.some(arg => !statusArgs[arg])) logError(`The status type ${chalk.yellow(statusName)} needs the args ${chalk.yellow(statusModule.args.required.join(", "))}` + (statusModule.args.optional ? `It also supports ${chalk.yellow(statusModule.args.optional.join(", "))}` : ""));
+statusModule.validateArgs(statusArgs);
 
 const client = new ShardClient(process.env.TOKEN, {
   isBot: false
@@ -83,14 +81,14 @@ server.listen(process.env.PORT ?? 3000);
 
 console.log(`\n[${chalk.green.bold("REPLIT")}] The webserver is ready.\n`);
 
-client.run().then(_ => {
+client.run().then(async _ => {
   console.log(chalk.green(`[${style(statusName.toUpperCase())}] Successfully logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})!\nYour status will update every minute to ensure your status doesn't get overriden`));
 
   const startTime = Date.now();
   function update() {
     statusModule.run({
       client,
-      statusInfo,
+      statusInfo: statusArgs,
       setPresence: presenceData => client.gateway.setPresence({
         activity: {
           ...presenceData,
