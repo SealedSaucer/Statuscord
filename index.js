@@ -42,7 +42,8 @@ if (!process.env.TOKEN) logError("You need to add a token inside replit's secret
 const statusArgs = [
     "type",
     ...new Set(readdirSync("./statuses").map(file => Object.values(require(`./statuses/${file}`).args)).flat(3))
-  ].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {});
+  ].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {}),
+  [statusName, style] = (statusArgs.type && (statuses.get(+statusArgs.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusArgs.type.toLowerCase()))) || [];
 
 if (!statusName) logError(`\
 ${!statusArgs.type
@@ -63,9 +64,8 @@ node . --type=listening --song="Medic!" --artist="Valve Studio Orchestra" --albu
 node . --type=streaming --url="https://twitch.tv/SealedSaucer" --title="Half-Life 2"`));
 // you can tell that the person who wrote this is a major fan
 
-const
-  [statusName, style] = statuses.get(+statusArgs.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusArgs.type.toLowerCase()) ?? [],
-  statusModule = require(`./statuses/${statusName}.js`);
+
+const statusModule = require(`./statuses/${statusName}.js`);
 
 if (statusModule.args.required.some(arg => !statusArgs[arg])) logError(`The status type ${chalk.yellow(statusName)} needs the args ${chalk.yellow(statusModule.args.required.join(", "))}` + (statusModule.args.optional ? `It also supports ${chalk.yellow(statusModule.args.optional.join(", "))}` : ""));
 statusModule.validateArgs(statusArgs);
