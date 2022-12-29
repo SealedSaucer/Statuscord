@@ -47,7 +47,7 @@ const statusArgs = [
 
 if (!statusName) logError(`\
 ${!statusArgs.type
-  ? "You need to type --type=<statusType> after the node command"
+  ? "You need to type --type=<statusType> after the node command in the .replit file"
   : "Invalid status type"
 }
 
@@ -61,7 +61,9 @@ node . --type=playing --game="Half-Life 2"
 
 node . --type=listening --song="Medic!" --artist="Valve Studio Orchestra" --album="Fight Songs" --image="mp:attachments/1043947086946766888/1055860217163829258/ss_2c78852e39f4d838007b34460baeb40aabe41193.png"
 
-node . --type=streaming --url="https://twitch.tv/SealedSaucer" --title="Half-Life 2"`));
+node . --type=streaming --url="https://twitch.tv/SealedSaucer" --title="Half-Life 2"
+
+Put the command in the .replit file (click the three dots on the file bar then show hidden files if you can't see it)`));
 // you can tell that the person who wrote this is a major fan
 
 
