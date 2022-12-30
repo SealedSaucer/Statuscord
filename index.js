@@ -1,6 +1,8 @@
+const { GatewayPresenceStatuses } = require("detritus-client-socket/lib/constants.js");
+
 const
   // You need to change this
-  CLIENT_ID = "Add your client id here",
+  CLIENT_ID = "420",
   // Don't remove the ""
   // Example:
   // CLIENT_ID = "42069420694206942069",
@@ -24,8 +26,8 @@ const
   chalk = require("chalk"),
   server = express(),
   dotenv = require("dotenv"),
-  { readdirSync } = require("node:fs"),
-  { logError } = require("./chalk.js"),
+  { readdirSync, stat } = require("node:fs"),
+  { logInfo, logError } = require("./chalk.js"),
 
   statuses = new Map([
     [1, ["playing", chalk.yellowBright.bold]],
@@ -36,14 +38,22 @@ const
 
 dotenv.config();
 
-if (!/^\d+$/.test(CLIENT_ID)) logError("Read the top of the file once again");
+if (!/^\d+$/.test(CLIENT_ID)) logError("Read the top of the index.js file once again");
 if (!process.env.TOKEN) logError("You need to add a token inside replit's secrets or through a .env file");
 
+/**
+ * @type (string | null)[]
+ */
 const statusArgs = [
     "type",
+    "status",
     ...new Set(readdirSync("./statuses").map(file => Object.values(require(`./statuses/${file}`).args)).flat(3))
   ].reduce((a, c) => ({ ...a, [c]: getArg(c) }), {}),
   [statusName, style] = (statusArgs.type && (statuses.get(+statusArgs.type) ?? [...statuses.values()].find(([name]) => name.toLowerCase() === statusArgs.type.toLowerCase()))) || [];
+
+statusArgs.status = GatewayPresenceStatuses[statusArgs.status?.toUpperCase()];
+
+if (!statusArgs.status) logInfo("Consider adding a online, idle or dnd status with --status");
 
 if (!statusName) logError(`\
 ${!statusArgs.type
@@ -65,7 +75,6 @@ node . --type=streaming --url="https://twitch.tv/SealedSaucer" --title="Half-Lif
 
 Put the command in the .replit file (click the three dots on the file bar then show hidden files if you can't see it)`));
 // you can tell that the person who wrote this is a major fan
-
 
 const statusModule = require(`./statuses/${statusName}.js`);
 
@@ -93,6 +102,7 @@ client.run().then(async _ => {
       client,
       statusInfo: statusArgs,
       setPresence: presenceData => client.gateway.setPresence({
+        status: statusArgs.status,
         activity: {
           ...presenceData,
           createdAt: startTime,
