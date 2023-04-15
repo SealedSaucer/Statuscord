@@ -16,7 +16,7 @@ This code is from [this tutorial](https://youtu.be/aWW2xp2i54g). If you have any
 
 ---
 
-</br>
+<br />
 
 > ⭐ Feel free to Star the Repository if this helped you! ;)
 

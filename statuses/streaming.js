@@ -1,21 +1,40 @@
-const
-  rpcGenerator = require("discordrpcgenerator"),
+const { ShardClient } = require("detritus-client");
+const { GatewayActivityTypes } = require("detritus-client-socket/lib/constants");
+const { URL } = require("node:url");
+const { logError } = require("../chalk");
 
-  // Add your client id in the index.js file
-  IMAGE_NAME = "The name of the image",
-  LARGE_TEXT = "Large text on the status",
-  SMALL_TEXT = "Small text on the status",
-  LINK = "https://twitch.tv/SealedSaucer";
- 
-module.exports = (client, CLIENT_ID) => rpcGenerator.getRpcImage(CLIENT_ID, IMAGE_NAME)
-  .then(image => client.user.setPresence(
-    new rpcGenerator.Rpc()
-      .setName("twitch")
-      .setUrl(LINK)
-      .setType("STREAMING")
-      .setApplicationId(CLIENT_ID)
-      .setAssetsLargeImage(image.id)
-      .setAssetsLargeText(SMALL_TEXT)
-      .setDetails(LARGE_TEXT)
-      .toDiscord()
-  ));
+const getSiteName = url => {
+  const { hostname } = new URL(url);
+
+  const siteName = new Map([
+    ["twitch.tv", "Twitch"],
+    ["youtube.com", "YouTube"]
+  ]).get(hostname);
+
+  if (!siteName) return logError("Only twitch.tv and youtube.com urls are supported");
+
+  return siteName;
+};
+
+module.exports = {
+  args: {
+    required: ["title", "url"]
+  },
+  validateArgs: ({ url }) => getSiteName(url),
+  async run({
+    statusInfo: {
+      title,
+      url
+    },
+    setPresence
+  }) {
+    const siteName = getSiteName(url);
+
+    return await setPresence({
+      type: GatewayActivityTypes.STREAMING,
+      name: siteName,
+      details: title,
+      url
+    });
+  }
+}
