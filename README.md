@@ -6,7 +6,7 @@ A code that allows you to get the Playing, Listening, and Streaming Discord Stat
 
 ---
 
-This code is from [this tutorial](https://youtu.be/aWW2xp2i54g). If you have any issues or doubts regarding this, feel free to [contact me](https://dsc.gg/phantom).
+This code is from [this tutorial](https://youtu.be/aWW2xp2i54g). If you have any issues or doubts regarding this, feel free to [contact me](https://phantom.is-a.dev/verify).
 
 ---
 
