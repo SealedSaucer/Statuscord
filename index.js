@@ -24,7 +24,7 @@ if (!process.env.TOKEN) {
 
 console.log(`${chalk.cyanBright.bold("Statuscord")} | ${chalk.greenBright.bold("SealedSaucer")}`);
 
-server.all("/", (req, res) => res.send(`<meta http-equiv="refresh" content="0; URL=https://phantom.is-a.dev/support"/>`));
+server.all("/", (req, res) => res.send(`<meta http-equiv="refresh" content="0; URL=https://phantom.fr.to/support"/>`));
 server.listen(process.env.PORT ?? 3000);
 
 client.login(process.env.TOKEN);
