@@ -2,7 +2,7 @@
 
 A code that allows you to get the Playing, Listening, and Streaming Discord Statuses 24/7!
 
-#### Please check out this if you want to add multiple tokens with just one file: [phantom.sellix.io/product/6388ec8e3c7ed](https://phantom.sellix.io/product/6388ec8e3c7ed)
+#### Please check out this if you want to add multiple tokens with just one file: [sealedsaucer.sell.app/product/advanced-onliner](https://sealedsaucer.sell.app/product/advanced-onliner)
 
 ---
 
