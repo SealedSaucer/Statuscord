@@ -119,7 +119,6 @@ async def main():
 
                 if data.get("t") == "READY":
                     print(f"Logged in as {user['username']} ({user['id']})!")
-
                     if choice == "1":
                         await set_playing(ws)
                     elif choice == "2":
@@ -128,7 +127,6 @@ async def main():
                         await set_streaming(ws)
                     else:
                         print("Invalid choice!")
-
                 if data.get("op") == 11:
                     continue
 
